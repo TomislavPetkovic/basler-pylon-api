@@ -16,6 +16,7 @@
   \date   2021-04-21
 */
 
+
 #ifndef __BATCHACQUISITIONSTDAFX_H
 #define __BATCHACQUISITIONSTDAFX_H
 
@@ -90,7 +91,7 @@
 #pragma warning(disable: 4005)
 
 #include <sapclassbasic.h>
-#include "corapi.h"
+#include <corapi.h>
 
 #pragma warning(pop)
 
