@@ -97,3 +97,6 @@ find_package(VTK REQUIRED)
 target_include_directories(${PROJECT_NAME} PUBLIC ${VTK_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} ${VTK_LIBRARIES})
 
+find_package(OpenCV REQUIRED)
+target_include_directories(${PROJECT_NAME} PUBLIC ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
