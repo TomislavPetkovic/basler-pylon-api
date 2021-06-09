@@ -84,7 +84,6 @@
 
 
 /* Teledyne DALSA Sapera LT SDK */
-#define HAVE_SAPERA_SDK
 #ifdef HAVE_SAPERA_SDK
 
 #pragma warning(push)
@@ -104,7 +103,6 @@
 
 
 /* PointGrey/FLIR FlyCapture2 SDK */
-#define HAVE_FLYCAPTURE2_SDK
 #ifdef HAVE_FLYCAPTURE2_SDK
 
 #pragma warning(push)
@@ -124,7 +122,6 @@
 
 
 /* Basler Pylon SDK */
-#define HAVE_PYLON_SDK
 #ifdef HAVE_PYLON_SDK
 
 // Note that PylonIncludes.h automatically adds libs required for linking.
