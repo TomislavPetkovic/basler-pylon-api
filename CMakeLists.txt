@@ -84,19 +84,28 @@ if(USE_FLYCAPTURE2)
             set(FLYCAPTURE2_LIB_PATH "${FLYCAPTURE2_DIR}/lib64")
         endif(MSVC_VERSION STREQUAL "1800")
 
-        file(GLOB LIBS ${FLYCAPTURE2_LIB_PATH}/*.lib)
         if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-            if(MSVC_VERSION STREQUAL "1800" OR MSVC_VERSION STREQUAL "1900")
-                list(REMOVE_AT LIBS 0 2 4 6 8 10 12 14)
+            if(MSVC_VERSION STREQUAL "1800")
+                list(APPEND LIBS ${FLYCAPTURE2_LIB_PATH}/FlyCapture2d_v120.lib)
+                list(APPEND LIBS ${FLYCAPTURE2_LIB_PATH}/FlyCapture2GUId_v120.lib)
+            elseif(MSVC_VERSION STREQUAL "1900")
+                list(APPEND LIBS ${FLYCAPTURE2_LIB_PATH}/FlyCapture2d_v140.lib)
+                list(APPEND LIBS ${FLYCAPTURE2_LIB_PATH}/FlyCapture2GUId_v140.lib)
             else()
-                list(REMOVE_AT LIBS 0 2 4 6 8)
-            endif(MSVC_VERSION STREQUAL "1800" OR MSVC_VERSION STREQUAL "1900")
+                list(APPEND LIBS ${FLYCAPTURE2_LIB_PATH}/FlyCapture2d_v100.lib)
+                list(APPEND LIBS ${FLYCAPTURE2_LIB_PATH}/FlyCapture2GUId_v100.lib)
+            endif(MSVC_VERSION STREQUAL "1800")
         else()
-            if(MSVC_VERSION STREQUAL "1800" OR MSVC_VERSION STREQUAL "1900")
-                list(REMOVE_AT LIBS 1 3 5 7 9 11 13 15)
+            if(MSVC_VERSION STREQUAL "1800")
+                list(APPEND LIBS ${FLYCAPTURE2_LIB_PATH}/FlyCapture2_v120.lib)
+                list(APPEND LIBS ${FLYCAPTURE2_LIB_PATH}/FlyCapture2GUI_v120.lib)
+            elseif(MSVC_VERSION STREQUAL "1900")
+                list(APPEND LIBS ${FLYCAPTURE2_LIB_PATH}/FlyCapture2_v140.lib)
+                list(APPEND LIBS ${FLYCAPTURE2_LIB_PATH}/FlyCapture2GUI_v140.lib)
             else()
-                list(REMOVE_AT LIBS 1 3 5 7 9)
-            endif(MSVC_VERSION STREQUAL "1800" OR MSVC_VERSION STREQUAL "1900")
+                list(APPEND LIBS ${FLYCAPTURE2_LIB_PATH}/FlyCapture2_v100.lib)
+                list(APPEND LIBS ${FLYCAPTURE2_LIB_PATH}/FlyCapture2GUI_v100.lib)
+            endif(MSVC_VERSION STREQUAL "1800")
         endif(CMAKE_BUILD_TYPE STREQUAL "Debug")
         target_link_libraries(${PROJECT_NAME} ${LIBS})
     else()
@@ -111,3 +120,19 @@ target_link_libraries(${PROJECT_NAME} ${VTK_LIBRARIES})
 find_package(OpenCV REQUIRED)
 target_include_directories(${PROJECT_NAME} PUBLIC ${OpenCV_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
+
+file(GLOB VTK_DLL ${VTK_PREFIX_PATH}/bin/*.dll)
+
+file(GLOB OPENCV_DLL_DEBUG ${OpenCV_INSTALL_PATH}/bin/Debug/*.dll)
+file(GLOB OPENCV_DLL_RELEASE ${OpenCV_INSTALL_PATH}/bin/Release/*.dll)
+
+install(TARGETS ${PROJECT_NAME}
+        DESTINATION $ENV{PROGRAMFILES}/BatchAcquisition)
+
+install(FILES ${VTK_DLL}
+              ${OPENCV_DLL_DEBUG}
+              ${OPENCV_DLL_RELEASE}
+        DESTINATION $ENV{PROGRAMFILES}/BatchAcquisition)
+
+install(DIRECTORY Data/
+        DESTINATION $ENV{APPDATA}/BatchAcquisition)
